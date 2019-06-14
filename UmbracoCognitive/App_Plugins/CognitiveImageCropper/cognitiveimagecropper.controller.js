@@ -4,7 +4,6 @@ angular.module('umbraco')
 
         var config = angular.copy($scope.model.config);
 
-        config.crops = config["adage-cropsizes"];
         $scope.filesSelected = onFileSelected;
         $scope.filesChanged = onFilesChanged;
         $scope.fileUploaderInit = onFileUploaderInit;

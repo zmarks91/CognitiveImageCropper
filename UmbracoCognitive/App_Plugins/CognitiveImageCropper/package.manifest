@@ -3,9 +3,9 @@
   "propertyEditors": [
     {
       /*this must be a unique alias*/
-      "alias": "Adage.CognitiveImageCropper",
+      "alias": "zzzAdage.ImageCropperJsLoader",
       /*the name*/
-      "name": "Adage Cognitive Image Cropper",
+      "name": "zzzAdage Image Cropper js",
       /*the icon*/
       "icon": "icon-code",
       /*grouping for "Select editor" dialog*/
@@ -14,24 +14,24 @@
       "editor": {
         "view": "~/App_Plugins/CognitiveImageCropper/cognitiveimagecropper.html",
         "valueType": "JSON"
-      },
-      "prevalues": {
-        "fields": [
-          {
-            "label": "Crop Sizes",
-            "description": "Crop Sizes",
-            "key": "adage-cropsizes",
-            "view": "~/App_Plugins/CognitiveImageCropper/cognitiveimagecropper.prevalues.html"
-          },
-          {
-            "label": "Enter the Azure Cognitive Services api key",
-            "description": "Your Azure Cognitive Services api key",
-            "key": "apikey",
-            "view": "textstring"
-          }
-
-        ]
       }
+      //"prevalues": {
+      //  "fields": [
+      //    {
+      //      "label": "Crop Sizes",
+      //      "description": "Crop Sizes",
+      //      "key": "adage-cropsizes",
+      //      "view": "~/App_Plugins/CognitiveImageCropper/cognitiveimagecropper.prevalues.html"
+      //    },
+      //    {
+      //      "label": "Enter the Azure Cognitive Services api key",
+      //      "description": "Your Azure Cognitive Services api key",
+      //      "key": "apikey",
+      //      "view": "textstring"
+      //    }
+
+      //  ]
+      //}
     }
   ],
   // array of files we want to inject into the application on app_start
