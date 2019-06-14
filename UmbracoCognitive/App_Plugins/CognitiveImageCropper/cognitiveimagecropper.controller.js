@@ -83,7 +83,57 @@ angular.module('umbraco')
                 $scope.imageSrc = files[0].fileSrc;
                 //set form to dirty to track changes
                 $scope.imageCropperForm.$setDirty();
+
+                var url = '/umbraco/cognitiveimagecropper/cognitiveapi/getfocalpoint';
+                //var requestData = { issueKey: issueKey, timeSpent: entryHours, dateWorked: entryDate, comments: entryText, jiraUsername: jiraUsername, jiraPassword: jiraPassword, authorAccountId: authorAccountId, tempoAccessToken: tempoAccessToken };
+
+                getBase64(files[0]).then(function (base64File) {
+                    fetch(url, {
+                        method: 'POST',
+                        body: base64File,
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }).then(function (result) {
+                        focalPointChanged(result.left, result.top);
+
+                        //$scope.model.value = angular.extend(angular.copy($scope.model.config), { altText: altText });
+                    }).catch(function (err) {
+                        var currentResponse = JSON.parse(err);
+                        console.log(currentResponse);
+
+                        if (currentResponse.ExceptionMessage) {
+                            alert(currentResponse.ExceptionMessage);
+                        }
+                        else {
+                            alert(request.response);
+                        }
+                    });
+                });
             }
+        }
+
+        function getBase64(file) {
+            var reader = new FileReader();
+            
+            reader.onload = function () {
+                console.log(reader.result);
+            };
+            reader.onerror = function (error) {
+                console.log('Error: ', error);
+            };
+
+            return new Promise((resolve, reject) => {
+                reader.onerror = () => {
+                    temporaryFileReader.abort();
+                    reject(new DOMException("Problem parsing input file."));
+                };
+
+                reader.onload = () => {
+                    resolve(reader.result);
+                };
+                reader.readAsDataURL(file);
+            });
         }
 
         /**
