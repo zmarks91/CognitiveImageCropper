@@ -97,7 +97,7 @@ namespace AdageCognitiveImageHandler
             }
         }
 
-        public async virtual Task HandleImageUpload(IMedia mediaFile)
+        public virtual void HandleImageUpload(IMedia mediaFile)
         {
             var umbracoFile = mediaFile.Properties["umbracoFile"];
             if (umbracoFile != null)
@@ -107,7 +107,9 @@ namespace AdageCognitiveImageHandler
                 var focalPoint = umbracoFileJson["focalPoint"];
 
                 string localFilePath = umbracoFileJson["src"].ToString();
-                FocalPoint autoFocalPoint = await GetFocalPointByLocalPath(localFilePath);
+
+                FocalPoint autoFocalPoint = Task.Run<FocalPoint>(async () => await GetFocalPointByLocalPath(localFilePath)).Result;
+
                 var jsonString = string.Format(@"{{""left"": ""{0}"", ""top"": ""{1}""}}", autoFocalPoint.Left, autoFocalPoint.Top);
 
                 if (focalPoint == null)
