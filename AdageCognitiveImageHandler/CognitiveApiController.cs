@@ -9,6 +9,8 @@ using Umbraco.Web.WebApi;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
 using Umbraco.Web.Mvc;
+using System.IO;
+using System.Web.Hosting;
 
 namespace AdageCognitiveImageHandler
 {
@@ -18,35 +20,24 @@ namespace AdageCognitiveImageHandler
     [PluginController("CognitiveImageCropper")]
     public class CognitiveApiController : UmbracoApiController
     {   
-        public async Task<FocalPoint> GetFocalPoint(string imageUrl, string subscriptionKey, string region)
+        
+
+        public async Task<string> GetImageDescription(string imageUrl, string subscriptionKey, string region)
         {
-            //TODO: remove defaults
-            if (string.IsNullOrEmpty(region))
-                region = "northcentralus";
+            return "Not implemented";
+        }
 
-            //TODO: remove defaults
-            if (string.IsNullOrEmpty(subscriptionKey))
-                subscriptionKey = "04ede2d9fa174f61899dce82b1a6fbf4";
+        public async Task<FocalPoint> GetFocalPoint(string imageUrl)
+        {
+            AdageMediaService service = new AdageMediaService();
+            return await service.GetFocalPoint(imageUrl);
+        }
 
-            ComputerVisionClient computerVision = new ComputerVisionClient(
-                new ApiKeyServiceClientCredentials(subscriptionKey),
-                new System.Net.Http.DelegatingHandler[] { });
-
-            computerVision.Endpoint = $"https://{region}.api.cognitive.microsoft.com";
-            AreaOfInterestResult result = await computerVision.GetAreaOfInterestAsync(imageUrl);
-            FocalPoint point = new FocalPoint()
-            {
-                Left = result.AreaOfInterest.X + (result.AreaOfInterest.W / 2),
-                Top = result.AreaOfInterest.Y + (result.AreaOfInterest.H / 2)
-            };
-            return point;
+        public async Task<FocalPoint> GetFocalPoint(HttpPostedFile file)
+        {
+            AdageMediaService service = new AdageMediaService();
+            return await service.GetFocalPoint(file.InputStream);
         }
     }
     
-    public class FocalPoint
-    {
-        public int Left { get; set; }
-        public int Top { get; set; }
-
-    }
 }

@@ -243,6 +243,7 @@
   <ItemGroup>
     <Compile Include="AdageMediaService.cs" />
     <Compile Include="CognitiveApiController.cs" />
+    <Compile Include="FocalPoint.cs" />
     <Compile Include="MediaUploadEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
