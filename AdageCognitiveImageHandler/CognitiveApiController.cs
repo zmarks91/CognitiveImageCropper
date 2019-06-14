@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using Umbraco.Web.WebApi;
-using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
-using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
 using Umbraco.Web.Mvc;
 using System.IO;
 using System.Web.Hosting;
@@ -27,16 +25,10 @@ namespace AdageCognitiveImageHandler
             return "Not implemented";
         }
 
-        public async Task<FocalPoint> GetFocalPoint(string imageUrl)
+        public async Task<FocalPoint> GetFocalPoint(Byte[] bytes)
         {
             AdageMediaService service = new AdageMediaService();
-            return await service.GetFocalPoint(imageUrl);
-        }
-
-        public async Task<FocalPoint> GetFocalPoint(HttpPostedFile file)
-        {
-            AdageMediaService service = new AdageMediaService();
-            return await service.GetFocalPoint(file.InputStream);
+            return await service.GetFocalPointByBytes(bytes);
         }
     }
     
