@@ -230,7 +230,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MediaService.cs" />
+    <Compile Include="AdageMediaService.cs" />
     <Compile Include="MediaUploadEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
