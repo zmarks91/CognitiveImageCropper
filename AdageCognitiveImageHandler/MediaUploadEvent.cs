@@ -25,7 +25,7 @@ namespace AdageCognitiveImageHandler
 
         }
 
-        private void ContentService_Saving(Umbraco.Core.Services.IContentService sender, Umbraco.Core.Events.ContentSavingEventArgs e)
+        private async void ContentService_Saving(Umbraco.Core.Services.IContentService sender, Umbraco.Core.Events.ContentSavingEventArgs e)
         {
             foreach (var mediaItem in e.SavedEntities.OfType<Umbraco.Core.Models.IMedia>())
             {
@@ -33,12 +33,12 @@ namespace AdageCognitiveImageHandler
                 {
                     //perhaps send to Azure for AI analysis of image contents or something...
                     AdageMediaService service = new AdageMediaService();
-                    service.HandleImageUpload(mediaItem);
+                    await service.HandleImageUpload(mediaItem);
                 }
             }
         }
 
-        private void DataTypeService_Saving(Umbraco.Core.Services.IDataTypeService sender, Umbraco.Core.Events.SaveEventArgs<Umbraco.Core.Models.IDataType> e)
+        private async void DataTypeService_Saving(Umbraco.Core.Services.IDataTypeService sender, Umbraco.Core.Events.SaveEventArgs<Umbraco.Core.Models.IDataType> e)
         {
             foreach (var mediaItem in e.SavedEntities.OfType<Umbraco.Core.Models.IMedia>())
             {
@@ -46,12 +46,12 @@ namespace AdageCognitiveImageHandler
                 {
                     //perhaps send to Azure for AI analysis of image contents or something...
                     AdageMediaService service = new AdageMediaService();
-                    service.HandleImageUpload(mediaItem);
+                    await service.HandleImageUpload(mediaItem);
                 }
             }
         }
 
-        private void MediaService_Saving(Umbraco.Core.Services.IMediaService sender, Umbraco.Core.Events.SaveEventArgs<Umbraco.Core.Models.IMedia> e)
+        private async void MediaService_Saving(Umbraco.Core.Services.IMediaService sender, Umbraco.Core.Events.SaveEventArgs<Umbraco.Core.Models.IMedia> e)
         {
             foreach (var mediaItem in e.SavedEntities)
             {
@@ -59,7 +59,7 @@ namespace AdageCognitiveImageHandler
                 {
                     //perhaps send to Azure for AI analysis of image contents or something...
                     AdageMediaService service = new AdageMediaService();
-                    service.HandleImageUpload(mediaItem);
+                    await service.HandleImageUpload(mediaItem);
                 }
             }
         }
