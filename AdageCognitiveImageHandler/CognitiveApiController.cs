@@ -28,17 +28,18 @@ namespace AdageCognitiveImageHandler
         public async Task<FocalPoint> GetFocalPoint(Byte[] bytes)
         {
             AdageMediaService service = new AdageMediaService();
-            return await service.GetFocalPoint(bytes);
+            return await service.GetFocalPointByBytes(bytes);
         }
 
         [HttpPost]
-        public async Task<FocalPoint> GetFocalPoint(HttpPostedFile file)
-        {
+        public async Task<FocalPoint> GetFocalPoint()
+        {            
             AdageMediaService service = new AdageMediaService();
+            
             var asyncInputStream = await Request.Content.ReadAsStreamAsync();
             var base64Encoded = await Request.Content.ReadAsStringAsync();
             byte[] imageData = System.Convert.FromBase64String(base64Encoded);
-            return await service.GetFocalPoint(asyncInputStream);
+            return await service.GetFocalPointByBytes(null);
         }
     }
     
