@@ -8,7 +8,7 @@ using System.Web.Http;
 using Umbraco.Web.WebApi;
 using Umbraco.Web.Mvc;
 using System.IO;
-using System.Net;
+using System.Web.Hosting;
 using System.Net.Http;
 
 namespace AdageCognitiveImageHandler
@@ -19,6 +19,7 @@ namespace AdageCognitiveImageHandler
     [PluginController("CognitiveImageCropper")]
     public class CognitiveApiController : UmbracoApiController
     {   
+        
 
         public async Task<string> GetImageDescription(string imageUrl, string subscriptionKey, string region)
         {
@@ -34,7 +35,7 @@ namespace AdageCognitiveImageHandler
         [HttpPost]
         public async Task<FocalPoint> GetFocalPoint()
         {
-            
+
             AdageMediaService service = new AdageMediaService();
             string root = HttpContext.Current.Server.MapPath("~/App_Data");
             var provider = new MultipartFormDataStreamProvider(root);
