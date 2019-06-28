@@ -86,14 +86,17 @@ angular.module('umbraco')
 
                 var url = '/umbraco/cognitiveimagecropper/cognitiveapi/getfocalpoint';
                 //var requestData = { issueKey: issueKey, timeSpent: entryHours, dateWorked: entryDate, comments: entryText, jiraUsername: jiraUsername, jiraPassword: jiraPassword, authorAccountId: authorAccountId, tempoAccessToken: tempoAccessToken };
+                
 
-                getBase64(files[0]).then(function (base64File) {
+                fetch(files[0].fileSrc).then(async function (base64File) {
+                    var data = new FormData();
+                    var base64Blob = await base64File.blob();
+                    data.append('files', base64Blob, files[0].fileName);
+                    data.append('newItem', 'sendAllData');
+
                     fetch(url, {
                         method: 'POST',
-                        body: base64File,
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
+                        body: data
                     }).then(function (result) {
                         focalPointChanged(result.left, result.top);
 
